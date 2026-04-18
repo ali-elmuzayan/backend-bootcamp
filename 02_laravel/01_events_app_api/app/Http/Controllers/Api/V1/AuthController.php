@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Api\V1\LoginRequest;
 use App\Http\Requests\Api\V1\RegisterRequest;
 use App\Models\User;
-use App\Support\ApiResponse;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller
+class AuthController extends ApiController
 {
-    use ApiResponse; 
     public function register(RegisterRequest $request) 
     {
 
@@ -23,7 +21,7 @@ class AuthController extends Controller
 
         // TODO: add event that the user register successfully to send email to the user
 
-        return $this->successResponse($user, "User created successfully");
+        return $this->success($user, "User created successfully");
     }
 
     public function login(LoginRequest $request) 
@@ -31,7 +29,7 @@ class AuthController extends Controller
         // TODO: in the LoginRequest set the rate limiter
         $authInfo = $request->authenticate(); 
 
-        return $this->successResponse($authInfo, "Login Successfully"); 
+        return $this->success($authInfo, "Login Successfully"); 
     }
 
 
@@ -39,7 +37,7 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
 
-        return $this->successResponse(null, "Logout Successfully", 204); 
+        return $this->success(null, "Logout Successfully", 204); 
     }
 
     public function me(Request $request) 
@@ -48,7 +46,7 @@ class AuthController extends Controller
             'user' => $request->user(), 
             'token' => $request->user()->currentAccessToken()->plainTextToken,
         ];
-        return $this->successResponse($user, "User info retrieved successfully");
+        return $this->success($user, "User info retrieved successfully");
     }
 
 
@@ -59,6 +57,6 @@ class AuthController extends Controller
     
             $authInfo = $request->user()->createToken('auth_token')->plainTextToken;
     
-            return $this->successResponse(['token' => $authInfo], "Token refreshed successfully");
+            return $this->success(['token' => $authInfo], "Token refreshed successfully");
     }
 }
