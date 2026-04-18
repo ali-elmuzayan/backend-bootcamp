@@ -25,6 +25,8 @@ trait ApiResponse
     }
 
 
+
+
     // Error response with validation errors
     protected function errorResponse(
         string $message = 'Error', 
