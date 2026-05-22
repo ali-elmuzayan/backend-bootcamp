@@ -1,14 +1,32 @@
-const planets = [
-    {
-        id: 1,
-        name: 'Earth',
-        description: 'Earth is the third planet from the Sun and the only astronomical object known to harbor life.'
-    },
-    {
-        id: 2,
-        name: 'Mars',
-        description: 'Mars is the fourth planet from the Sun and the second smallest planet in the Solar System.'
-    },
-]
+import { parse } from 'csv-parse';
+import fs from 'fs';
 
-export default planets;
+const habitablePlanets = [];
+
+function isHabitablePlanet(planet) {
+  return planet['koi_disposition'] === 'CONFIRMED'
+    && planet['koi_insol'] > 0.36 && planet['koi_insol'] < 1.11
+    && planet['koi_prad'] < 1.6;
+}
+
+fs.createReadStream('src/data/kepler_data.csv')
+  .pipe(parse({
+    comment: '#',
+    columns: true,
+  }))
+  .on('data', (data) => {
+    if (isHabitablePlanet(data)) {
+      habitablePlanets.push(data);
+    }
+  })
+  .on('error', (err) => {
+    console.log(err);
+  })
+  .on('end', () => {
+    console.log(habitablePlanets.map((planet) => {
+      return planet['kepler_name'];
+    }));
+    console.log(`${habitablePlanets.length} habitable planets found!`);
+  });
+
+export default habitablePlanets;

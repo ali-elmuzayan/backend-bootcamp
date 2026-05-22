@@ -4,7 +4,7 @@ import planets from '../models/planets.model.js';
  * get all planets
  */
 const getAllPlanets = (req, res) => {
-    if (mockPlanets.length === 0) {
+    if (planets.length === 0) {
         res.status(404).json({
             message: 'No planets found',
             data: []
@@ -13,7 +13,7 @@ const getAllPlanets = (req, res) => {
     }
     res.status(200).json({
         message: 'Planets fetched successfully',
-        data: mockPlanets
+        data: planets
     })
 }
 
@@ -22,7 +22,7 @@ const getAllPlanets = (req, res) => {
  */
 const getPlanetById = (req, res) => {
     const { id } = req.params;
-    const planet = mockPlanets.find((planet) => planet.id === Number(id)); 
+    const planet = planets.find((planet) => planet.id === Number(id)); 
     if (!planet) {
         return res.status(404).json({
             message: 'Planet not found',
@@ -41,16 +41,16 @@ const getPlanetById = (req, res) => {
 const createPlanet = (req, res) => {
     const { name, description } = req.body;
     const newPlanet = {
-        id: mockPlanets.length + 1,
+        id: planets.length + 1,
         name,
         description
     }
-    mockPlanets.push(newPlanet);
+    planets.push(newPlanet);
     res.status(201).json({
         message: 'Planet created successfully',
         data: newPlanet
     })
-}
+};
 
 
 /**
@@ -59,7 +59,7 @@ const createPlanet = (req, res) => {
 const updatePlanet = (req, res) => {
     const { id } = req.params;
     const { name, description } = req.body;
-    const planet = mockPlanets.find((planet) => planet.id === Number(id));
+    const planet = planets.find((planet) => planet.id === Number(id));
     if (!planet) {
         return res.status(404).json({
             message: 'Planet not found',
@@ -79,27 +79,24 @@ const updatePlanet = (req, res) => {
  */
 const deletePlanet = (req, res) => {
     const { id } = req.params;
-    const planet = mockPlanets.find((planet) => planet.id === Number(id));
+    const planet = planets.find((planet) => planet.id === Number(id));
     if (!planet) {
         return res.status(404).json({
             message: 'Planet not found',
             data: null
         })
     }
-    mockPlanets = mockPlanets.filter((planet) => planet.id !== Number(id));
+    planets = planets.filter((planet) => planet.id !== Number(id));
     res.status(200).json({
         message: 'Planet deleted successfully',
         data: null
-    })
-}
-
-
-
+    });
+};
 
 export {
-    getAllPlanets, 
+    getAllPlanets,
     getPlanetById,
-    createPlanet, 
-    updatePlanet, 
-    deletePlanet, 
-}
+    createPlanet,
+    updatePlanet,
+    deletePlanet,
+};
