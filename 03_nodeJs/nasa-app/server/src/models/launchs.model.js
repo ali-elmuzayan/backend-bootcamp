@@ -1,5 +1,7 @@
 const launches = new Map();
 
+let latestFlightNumber = 100;
+
 const firstLaunch = {
     flightNumber: 100,
     mission: 'Kepler Exploration X',
@@ -25,4 +27,17 @@ const secondLaunch = {
 launches.set(firstLaunch.flightNumber, firstLaunch);
 launches.set(secondLaunch.flightNumber, secondLaunch);
 
-export default launches;
+const getAllLaunches = () => {
+    return Array.from(launches.values());
+};
+
+const addNewLaunch = (launch) => {
+    latestFlightNumber++;
+    launches.set(latestFlightNumber, Object.assign(launch, {
+        flightNumber: latestFlightNumber,
+        upcoming: true,
+        success: true,
+    }));
+};
+
+export { getAllLaunches, addNewLaunch };

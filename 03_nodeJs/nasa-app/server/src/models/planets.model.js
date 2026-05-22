@@ -35,10 +35,12 @@ function loadPlanetsDate() {
 
 }
 
+const getAllPlanets = () => {
+  return habitablePlanets;
+}
+
 
 export  {
   loadPlanetsDate,
-  
+  getAllPlanets,
 };
-
-export default habitablePlanets;
