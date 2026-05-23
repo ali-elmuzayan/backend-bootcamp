@@ -3,7 +3,7 @@ import { getAllPlanets } from '../models/planets.model.js';
 /**
  * get all planets
  */
-const getAllPlanets = (req, res) => {
+const httpGetAllPlanets = (req, res) => {
     if (getAllPlanets().length === 0) {
         res.status(404).json({
             message: 'No planets found',
@@ -20,7 +20,7 @@ const getAllPlanets = (req, res) => {
 /**
  * get a planet by id
  */
-const getPlanetById = (req, res) => {
+const httpGetPlanetById = (req, res) => {
     const { id } = req.params;
     const planet = getAllPlanets().find((planet) => planet.id === Number(id)); 
     if (!planet) {
@@ -37,7 +37,6 @@ const getPlanetById = (req, res) => {
 
 
 export {
-    getAllPlanets,
-    getPlanetById,
-
+    httpGetAllPlanets,
+    httpGetPlanetById,
 };

@@ -25,6 +25,13 @@ const httpAddNewLaunch = (req, res) => {
         });
     }
 
+    if (isNaN(launch.launchDate)) {
+        return res.status(400).json({
+            message: 'Invalid launch date',
+            data: null
+        });
+    }   
+
 
     const newFlightNumber = addNewLaunch(launch);
     return res.status(201).json({
