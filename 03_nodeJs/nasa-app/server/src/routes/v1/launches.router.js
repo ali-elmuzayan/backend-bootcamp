@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { httpGetAllLaunches, httpAddNewLaunch } from '../controllers/launches.controller.js';
+import { httpGetAllLaunches, httpAddNewLaunch } from '../../controllers/launches.controller';
 
 const router = Router();
 

@@ -1,7 +1,6 @@
 import express from 'express';
 import path from 'path';
-import planetsRouter from './routes/planets.router.js';
-import launchesRouter from './routes/launches.router.js';
+import apiRouter from './routes/api.js';
 import cors from 'cors';
 import morgan from 'morgan';
 
@@ -18,8 +17,7 @@ export const createApp = () => {
 
 
     // define API routes 
-    app.use('/api/v1/planets', planetsRouter);
-    app.use('/api/v1/launches', launchesRouter);        
+    app.use('/api/v1', apiRouter);
 
     // Serve the React app for the root route
     app.use((req, res) => {
